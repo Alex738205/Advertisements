@@ -7,7 +7,8 @@ class AdvertisementAdmin(admin.ModelAdmin):
         'description', 
         'price', 
         'auction',
-        'created_date'
+        'created_date',
+        'updated_date'
     ]
     
     list_filter = [
