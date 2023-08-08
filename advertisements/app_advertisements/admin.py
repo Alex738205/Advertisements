@@ -1,4 +1,5 @@
 from dataclasses import fields
+from email.mime import image
 from django.contrib import admin
 from .models import Advertisement
 class AdvertisementAdmin(admin.ModelAdmin):
@@ -8,7 +9,8 @@ class AdvertisementAdmin(admin.ModelAdmin):
         'price', 
         'auction',
         'created_date',
-        'updated_date'
+        'updated_date',
+        'image'
     ]
     
     list_filter = [
@@ -24,7 +26,7 @@ class AdvertisementAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             'Общие', {
-                'fields': ('title', 'description'), 
+                'fields': ('title', 'description','image'), 
             }
         ),
         (
@@ -34,8 +36,6 @@ class AdvertisementAdmin(admin.ModelAdmin):
             }
         )
     )
-    
-    
     
     @admin.action(description='Убрать возможность торга')
     def make_action_as_false(self,request,queryset):

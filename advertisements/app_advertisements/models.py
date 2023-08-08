@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib import admin
 from django.utils import timezone
 from django.utils.html import format_html
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class Advertisement(models.Model):
     title = models.CharField('Заголовок', max_length = 128)
@@ -10,6 +13,8 @@ class Advertisement(models.Model):
     auction = models.BooleanField('Торг',help_text='Торг уместен')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, verbose_name = "Пользователь", on_delete = models.CASCADE)
+    image = models.ImageField("Изображение", upload_to="advertisements/")
     
     class Meta:
         db_table='advertisements'
@@ -30,4 +35,3 @@ class Advertisement(models.Model):
             s = self.updated_at.time().strftime('%H:%M:%S')
             return format_html('<span style="color:red;fon-weight: bold">Сегодня в {}</span>',s)
         return self.updated_at.strftime('%d.%m.%Y %H:%M:%S')    
-
