@@ -34,4 +34,10 @@ class Advertisement(models.Model):
         if self.updated_at.date() == timezone.now().date():
             s = self.updated_at.time().strftime('%H:%M:%S')
             return format_html('<span style="color:red;fon-weight: bold">Сегодня в {}</span>',s)
-        return self.updated_at.strftime('%d.%m.%Y %H:%M:%S')    
+        return self.updated_at.strftime('%d.%m.%Y %H:%M:%S')   
+     
+    @admin.display(description='Иконка')
+    def image_small(self):
+        if self.image != '':
+            return format_html('<img src="{}" alt="Иконка" style="object-fit:cover;width:32px;height:32px"></img>', self.image.url)
+        return ''    

@@ -10,7 +10,7 @@ class AdvertisementAdmin(admin.ModelAdmin):
         'auction',
         'created_date',
         'updated_date',
-        'image'
+        'image_small'
     ]
     
     list_filter = [
