@@ -1,13 +1,19 @@
 from django.db import models
 from django.contrib import admin
+from django.forms import ValidationError
 from django.utils import timezone
 from django.utils.html import format_html
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+class TitleField(models.CharField):
+    def validate(self, value, model_instance):
+        super().validate(value, model_instance)
+        if len(value) > 0 and value[0] == '?':
+            raise ValidationError('Заголовок не может начинаться свопросительного знака')
 class Advertisement(models.Model):
-    title = models.CharField('Заголовок', max_length = 128)
+    title = TitleField('Заголовок', max_length = 128)
     description = models.TextField('Описание')
     price = models.DecimalField('Цена',max_digits=10, decimal_places=2)
     auction = models.BooleanField('Торг',help_text='Торг уместен')
@@ -35,7 +41,7 @@ class Advertisement(models.Model):
             s = self.updated_at.time().strftime('%H:%M:%S')
             return format_html('<span style="color:red;fon-weight: bold">Сегодня в {}</span>',s)
         return self.updated_at.strftime('%d.%m.%Y %H:%M:%S')   
-     
+    
     @admin.display(description='Иконка')
     def image_small(self):
         if self.image != '':
