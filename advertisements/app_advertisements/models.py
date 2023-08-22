@@ -10,7 +10,7 @@ User = get_user_model()
 class TitleField(models.CharField):
     def validate(self, value, model_instance):
         super().validate(value, model_instance)
-        if len(value) > 0 and value[0] == '?':
+        if len(value) > 0 and value[0] == '?':      
             raise ValidationError('Заголовок не может начинаться свопросительного знака')
 class Advertisement(models.Model):
     title = TitleField('Заголовок', max_length = 128)
