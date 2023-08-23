@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     advertisement = Advertisement.objects.all()
-    context = {'advertisements':advertisement}
+    context = { 'advertisements':advertisement }
     return render(request, "app_advertisements/index.html", context)
 
 def top_sellers(request):

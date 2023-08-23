@@ -12,6 +12,7 @@ class TitleField(models.CharField):
         super().validate(value, model_instance)
         if len(value) > 0 and value[0] == '?':      
             raise ValidationError('Заголовок не может начинаться свопросительного знака')
+        
 class Advertisement(models.Model):
     title = TitleField('Заголовок', max_length = 128)
     description = models.TextField('Описание')
