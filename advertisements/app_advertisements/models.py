@@ -4,6 +4,7 @@ from django.forms import ValidationError
 from django.utils import timezone
 from django.utils.html import format_html
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -47,4 +48,8 @@ class Advertisement(models.Model):
     def image_small(self):
         if self.image != '':
             return format_html('<img src="{}" alt="Иконка" style="object-fit:cover;width:32px;height:32px"></img>', self.image.url)
-        return ''    
+        return ''
+        
+    def get_absolute_url(self):
+        return reverse("adv-details", kwargs={"pk": self.pk})
+    
